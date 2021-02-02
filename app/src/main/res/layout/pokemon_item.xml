@@ -26,7 +26,7 @@
         android:layout_height="80dp"
         android:layout_marginStart="24dp"
         android:adjustViewBounds="false"
-        android:contentDescription="Image Pokemon"
+        android:contentDescription="@string/image_pokemon"
         android:cropToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/idPokemon"
