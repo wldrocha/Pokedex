@@ -2,13 +2,14 @@ package com.example.pokemon.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pokemon.Adapters.PokemonAdapter
 import com.example.pokemon.Models.Pokemon
 import com.example.pokemon.R
 import com.example.pokemon.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickListener {
 
      val pokemons = listOf(
              Pokemon(1, "bulbasaur", 1, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"),
@@ -23,9 +24,15 @@ class MainActivity : AppCompatActivity() {
         var binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //initRecycler()
+        Toast.makeText(this,"hi", Toast.LENGTH_SHORT)
 
         binding.recyclerViewPokemon.layoutManager = LinearLayoutManager(this)
-        val pokemonAdapter = PokemonAdapter(pokemons)
+        val pokemonAdapter = PokemonAdapter(this, pokemons, this)
         binding.recyclerViewPokemon.adapter = pokemonAdapter
+
+    }
+
+    override fun onItemClickListener(name: String) {
+        Toast.makeText(this,"i'm click", Toast.LENGTH_SHORT)
     }
 }
