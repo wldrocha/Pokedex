@@ -11,7 +11,9 @@ import com.example.pokemon.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickListener {
 
-     val pokemons = listOf(
+    private lateinit var binding:ActivityMainBinding
+
+    val pokemons = listOf(
              Pokemon(1, "bulbasaur", 1, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"),
              Pokemon(2, "ivysaur", 2, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png"),
              Pokemon(3, "venusaur", 3, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png"),
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickListener 
      )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //initRecycler()
         Toast.makeText(this,"hi", Toast.LENGTH_SHORT)
