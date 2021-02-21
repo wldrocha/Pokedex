@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pokemon.APIService
 import com.example.pokemon.Adapters.PokemonAdapter
 import com.example.pokemon.Models.Pokemon
-import com.example.pokemon.Models.PokemonsResponse
+import com.example.pokemon.Models.PokemonsListResponse
 import com.example.pokemon.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickListener 
         this.adapter = PokemonAdapter(this, pokemons, this)
         binding.recyclerViewPokemon.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewPokemon.adapter = adapter
-        searchBy()
+        getAllPokemons()
     }
 
     override fun onItemClickListener(name: String) {
@@ -56,15 +56,23 @@ class MainActivity : AppCompatActivity(), PokemonAdapter.OnPokemonClickListener 
                 .build()
     }
 
-    private fun searchBy(){
+    private fun getAllPokemons(){
         CoroutineScope(Dispatchers.IO).launch {
-            val call: Response<PokemonsResponse> = getRetrofit().create(APIService::class.java).getAllPokemons("pokemon/")
-            val responseCall: PokemonsResponse? = call.body()
-            runOnUiThread {
-                val pokemonList: List<Pokemon>? = responseCall?.pokemons ?: emptyList()
+            val callPokemonsList: Response<PokemonsListResponse> = getRetrofit().create(APIService::class.java).getAllPokemons("pokemon/")
+            val listResponseCall: PokemonsListResponse? = callPokemonsList.body()
 
-                if(call.isSuccessful && pokemonList != null){
-                    pokemons.addAll(pokemonList)
+            val pokemonList: List<Pokemon>? = listResponseCall?.pokemons ?: emptyList()
+            if(pokemonList != null){
+                for (pokemon in pokemonList){
+                    val callPokemon: Response<Pokemon> = getRetrofit().create(APIService::class.java).getPokemon("pokemon/${pokemon.name}")
+                    val responseCall: Pokemon? = callPokemon.body()
+                    if (responseCall != null) {
+                        pokemons.add(responseCall)
+                    }
+                }
+            }
+           runOnUiThread {
+                if(callPokemonsList.isSuccessful){
                     adapter.notifyDataSetChanged()
                 }else{
                     showError()

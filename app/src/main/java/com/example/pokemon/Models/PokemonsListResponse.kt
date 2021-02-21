@@ -2,7 +2,7 @@ package com.example.pokemon.Models
 
 import com.google.gson.annotations.SerializedName
 
-data class PokemonsResponse(
+data class PokemonsListResponse(
     var count: Int,
     var next: String,
     var previous: Any,

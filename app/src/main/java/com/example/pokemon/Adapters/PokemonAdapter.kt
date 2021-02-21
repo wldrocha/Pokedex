@@ -33,12 +33,12 @@ class PokemonAdapter(val context: Context, val pokemon: List<Pokemon>, val itemC
         val binding = PokemonItemBinding.bind(view)
 
         fun render(pokemon: Pokemon, position: Int) {
-            Picasso.get().load(pokemon.img).into(binding.imagePokemon)
+            Picasso.get().load(pokemon.sprites.front_default).into(binding.imagePokemon)
             //Picasso.get().load("http://i.imgur.com/DvpvklR.png").into(binding.imagePokemon);
             binding.idPokemon.text = pokemon.id.toString()
-            binding.pokemonText.text = pokemon.name.toString()
+            binding.pokemonText.text = pokemon.name
 
-            itemView.setOnClickListener { itemClickLister.onItemClickListener(pokemon.name) }
+         //   itemView.setOnClickListener { itemClickLister.onItemClickListener(pokemon.name) }
 
         }
     }
